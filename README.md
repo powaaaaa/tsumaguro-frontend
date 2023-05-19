@@ -21,7 +21,7 @@
 
 - 以下のコマンドを実行して、ローカルにリポジトリをクローンします。
 
-    `git clone git@github.com:powaaaaa/tsumaguro-frontend.git`
+    `git clone https://github.com/powaaaaa/tsumaguro-frontend.git`
 
 
 ### 3. ライブラリのインストール
@@ -73,11 +73,10 @@
     4. `git branch`で新しいブランチに移動したことを確認できれば大丈夫です。
 
     ※**mainブランチ以外**で`push`、`pull`するときは、以下のようにコマンドを実行して下さい。
-
-        ```
+        
         git push origin [ブランチ名]
         git pull origin [ブランチ名]
-        ```
+
 
 
     - マージ

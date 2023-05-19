@@ -1,8 +1,12 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import Link from "next/link";
+import HomePage from "./Home";
 
 export default function Home() {
   return (
-    <main>Hello, Blacktip</main>
-  )
+    <div>
+      <HomePage />
+    </div>
+  );
 }

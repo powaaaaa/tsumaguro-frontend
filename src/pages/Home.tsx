@@ -5,8 +5,8 @@ function HomePage() {
     <div>
       <h1>Home Page</h1>
 
-      <Link href="/Matching" className="border-solid border-2 rounded-md">
-        ゲームを始める(/MathingPageへ)
+      <Link href="/Setting" className="border-solid border-2 rounded-md">
+        ゲームを始める(/Settingへ)
       </Link>
     </div>
   );

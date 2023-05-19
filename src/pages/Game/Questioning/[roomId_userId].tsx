@@ -6,8 +6,9 @@ function PlayingPage() {
   const roomId = router.query.roomId_userId;
   return (
     <div>
-      <h1>ゲームプレイ(動的生成)[roomId: {roomId}]</h1>
+      <h1>質問(動的生成)[roomId: {roomId}]</h1>
 
+      <div>テキストボックスに質問を入力(全員の質問が揃うまで進行なし)</div>
       <Link href="/Game/Answering/1">答え合わせへ</Link>
     </div>
   );

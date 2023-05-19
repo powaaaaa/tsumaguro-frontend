@@ -7,8 +7,9 @@ function WaitingPage() {
   return (
     <div>
       <h1>参加者待機(動的生成)[roomId: {roomId}]</h1>
+      <div>現在の参加者を表示</div>
 
-      <Link href="/Game/Playing/1">ゲームプレイへ</Link>
+      <Link href="/Game/Position/1">ゲームプレイへ</Link>
     </div>
   );
 }

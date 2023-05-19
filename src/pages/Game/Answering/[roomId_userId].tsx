@@ -8,6 +8,7 @@ function PlayingPage() {
     <div>
       <h1>答え合わせ(動的生成)[roomId: {roomId}]</h1>
 
+      <div>お題と答えが一致するか表示</div>
       <Link href="/Game/Voting/1">インサイダー投票へ</Link>
     </div>
   );

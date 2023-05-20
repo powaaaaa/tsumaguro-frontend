@@ -136,12 +136,20 @@ function WaitingPage() {
 
   return (
     <div>
-      <h1>参加者待機(動的生成)</h1>
-      <div>現在の参加者を表示</div>
+      <h1 style={{ fontSize: "50px" }}>Waiting(動的生成)</h1>
 
-      <button type="button" onClick={indexCustom}>
-        ゲームプレイへ
-      </button>
+      <div
+        className="h-72"
+        style={{
+          backgroundColor: "Silver",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "20px",
+        }}
+      >
+
+      </div>
     </div>
   );
 }

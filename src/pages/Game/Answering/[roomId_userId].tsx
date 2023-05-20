@@ -84,12 +84,16 @@ function PlayingPage() {
 
   return (
     <div>
-      <h1>答え合わせ(動的生成)[roomId: {roomId}]</h1>
+      <h1 style={{ fontSize: "50px", }}>Answering(動的生成)[roomId: {roomId}]</h1>
 
-      <div>お題と答えが一致するか表示</div>
-      <button type="button" onClick={indexCustom}>
-        インサイダー投票へ
-      </button>
+      <div className="absolute left-28" style={{backgroundColor:'Silver'}}>
+      ~答え合わせ~
+      </div>
+
+      <div  className="h-72" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
+
+      </div>
+      
     </div>
   );
 }

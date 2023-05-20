@@ -3,17 +3,18 @@ import { session1 } from "./axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import { ClassNames } from "@emotion/react";
-import TextField from '@mui/material/TextField';
-import ReplyIcon from '@mui/icons-material/Reply';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import TextField from "@mui/material/TextField";
+import ReplyIcon from "@mui/icons-material/Reply";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import axios from "axios";
 import { atom } from "recoil";
 
 export const idState = atom({
   key: "id",
   default: 0,
+});
 
 function Setting1Page() {
   const router = useRouter();
@@ -53,38 +54,62 @@ function Setting1Page() {
 
   return (
     <div>
-      <h2 style={{ fontSize: "50px", }}>Setting Page 1</h2>
-      <div className="absolute left-28" style={{backgroundColor:'Silver'}}>
+      <h2 style={{ fontSize: "50px" }}>Setting Page 1</h2>
+      <div className="absolute left-28" style={{ backgroundColor: "Silver" }}>
         ~ユーザー名を設定~
       </div>
-        <div  className="h-72" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
-
-      <form style={{gap:'20px',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
-        <div style={{fontSize: 20}}>
-          ユーザー名を入力してください
-        </div>
-          <TextField id="outlined-basic" label="ユーザー名" variant="outlined" 
+      <div
+        className="h-72"
+        style={{
+          backgroundColor: "Silver",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "20px",
+        }}
+      >
+        <form
+          style={{
+            gap: "20px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div style={{ fontSize: 20 }}>ユーザー名を入力してください</div>
+          <TextField
+            id="outlined-basic"
+            label="ユーザー名"
+            variant="outlined"
             name="user_name"
             value={inputText}
             onChange={(event) => setInputText(event.target.value)}
           ></TextField>
-        
 
-        <Button type="button" onClick={handleClick} style={{fontSize:18 ,backgroundColor:'Gainsboro'}} className="hover: text-black">
-          <NavigateNextIcon sx={{ fontSize: 40 }}/>
-          決定
-        </Button>
-      </form>
+          <Button
+            type="button"
+            onClick={handleClick}
+            style={{ fontSize: 18, backgroundColor: "Gainsboro" }}
+            className="hover: text-black"
+          >
+            <NavigateNextIcon sx={{ fontSize: 40 }} />
+            決定
+          </Button>
+        </form>
       </div>
       <div>
-        <Button variant="contained" style={{backgroundColor:'Gainsboro'}}  className="absolute left-10 bottom-10  text-black">
+        <Button
+          variant="contained"
+          style={{ backgroundColor: "Gainsboro" }}
+          className="absolute left-10 bottom-10  text-black"
+        >
           <Link href={"http://localhost:3000/"}>
-             <ReplyIcon sx={{ fontSize: 40 }}  />
-             ホーム画面に戻る
-             </Link>
-             </Button>
-             </div>
-             </div>
+            <ReplyIcon sx={{ fontSize: 40 }} />
+            ホーム画面に戻る
+          </Link>
+        </Button>
+      </div>
+    </div>
   );
 }
 

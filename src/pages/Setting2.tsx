@@ -2,9 +2,9 @@ import { session2 } from "./axios";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { idState } from "./Setting1";
 import axios from "axios";
 import { atom } from "recoil";
@@ -108,25 +108,38 @@ function Setting1Page() {
 
   return (
     <div>
-      <h2 style={{ fontSize: "50px", }}>Setting Page 2</h2>
-      <div className="absolute left-28" style={{backgroundColor:'Silver'}}>
+      <h2 style={{ fontSize: "50px" }}>Setting Page 2</h2>
+      <div className="absolute left-28" style={{ backgroundColor: "Silver" }}>
         ~ゲーム設定~
       </div>
-      <div  className="h-72" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
-      <form style={{gap:'20px',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
-        <label>
-          プレイヤー人数(3~100人)
-        </label>
-        <input
+      <div
+        className="h-72"
+        style={{
+          backgroundColor: "Silver",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "20px",
+        }}
+      >
+        <form
+          style={{
+            gap: "20px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <label>プレイヤー人数(3~100人)</label>
+          <input
             type="number"
             name="participants_num"
             min="3"
             max="100"
             value={selectPnum}
-            onInput={handleInputP}></input>
-        <label>
-          ラウンド数
-        </label>
+            onInput={handleInputP}
+          ></input>
+          <label>ラウンド数</label>
           <input
             type="number"
             name="round_num"
@@ -135,9 +148,7 @@ function Setting1Page() {
             value={selectRnum}
             onInput={handleInputR}
           ></input>
-        <label>
-          質問回数
-        </label>
+          <label>質問回数</label>
           <input
             type="number"
             name="question_num"
@@ -146,12 +157,17 @@ function Setting1Page() {
             value={selectQnum}
             onInput={handleInputQ}
           ></input>
-          
-          <Button type="button" onClick={handleClick} style={{fontSize:18 ,backgroundColor:'Gainsboro'}} className="hover: text-black">
-          <NavigateNextIcon sx={{ fontSize: 40 }}/>
-          決定
+
+          <Button
+            type="button"
+            onClick={handleClick}
+            style={{ fontSize: 18, backgroundColor: "Gainsboro" }}
+            className="hover: text-black"
+          >
+            <NavigateNextIcon sx={{ fontSize: 40 }} />
+            決定
           </Button>
-      </form>
+        </form>
       </div>
     </div>
   );

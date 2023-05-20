@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { IdType, postCookie } from "@/pages/axios";
 
+Const host = 1;
+
 function PlayingPage() {
   const router = useRouter();
   const roomId = router.query.roomId_userId;
@@ -91,7 +93,14 @@ function PlayingPage() {
       </div>
 
       <div  className="h-72" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
-
+      {Number(host) === 1 ? (
+      <div style={{ fontSize: "30px" ,display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        
+      </div>
+    ) : (
+      <div style={{ fontSize: "30px", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+       
+      </div>
       </div>
       
     </div>

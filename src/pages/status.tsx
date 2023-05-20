@@ -1,11 +1,12 @@
-import { atom, useRecoilState } from "recoil";
-import { resType } from "./axios";
+// import { atom } from "recoil";
 
-// 共有するデータの作成
-export const idState = atom<resType>({
-  key: "id",
-  default: {
-    id: 0,
-    room_id: 0,
-  },
-});
+// // 共有するデータの作成
+// export const idState = atom({
+//   key: "id",
+//   default: 0,
+// });
+
+// export const room_idState = atom({
+//   key: "room_id",
+//   default: 0,
+// });

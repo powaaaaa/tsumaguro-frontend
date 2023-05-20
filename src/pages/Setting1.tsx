@@ -1,21 +1,26 @@
 import Link from "next/link";
-import { IdType, postCookie, getGameStatus, session } from "./axios";
+import postCookie, { IdType, getGameStatus, resType, session1 } from "./axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import getResId from "./recoil";
+import { useRecoilState } from "recoil";
+import { idState } from "./status";
 
 function Setting1Page() {
   const router = useRouter();
+  const [id, setId] = useRecoilState<resType>(idState);
 
   const posts = async (inputName: string) => {
-    const session: session = {
+    const session: session1 = {
       user_name: inputName,
       session_id: document.cookie,
+      Id: id,
+      setId: setId,
     };
     postCookie(session);
-    console.log(getResId);
     router.push(`/Setting2`);
   };
+
+  const [inputText, setInputText] = useState("");
 
   const handleClick = () => {
     if (inputText === "") {
@@ -26,8 +31,6 @@ function Setting1Page() {
       return;
     }
   };
-
-  const [inputText, setInputText] = useState("");
 
   return (
     <div>

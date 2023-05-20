@@ -1,11 +1,13 @@
-import { IdType, postCookie, getGameStatus, session } from "./axios";
+import postCookie, { postRoomInfo, session2 } from "./axios";
 import { useRouter } from "next/router";
-import postcss from "postcss";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { idState } from "./status";
 
 function Setting1Page() {
   const router = useRouter();
 
+  const [id, setId] = useRecoilState(idState);
   const [selectPnum, setSelectedPnum] = useState(3);
   const [selectQnum, setSelectQnum] = useState(3);
   const [selectRnum, setSelectRnum] = useState(1);
@@ -43,17 +45,22 @@ function Setting1Page() {
     setSelectQnum(Number(value));
   };
 
-  const posts = async (inputName: string) => {
-    const session: session = {
-      user_name: inputName,
-      session_id: document.cookie,
+  const posts = async () => {
+    const session: session2 = {
+      owner_id: id.id,
+      participants_num: selectPnum,
+      round_num: selectRnum,
+      questions_num: selectQnum,
+      Id: id,
+      setId: setId,
     };
-    postCookie(session);
-    router.push(`/Setting2`);
+    console.log(session);
+    postRoomInfo(session);
+    router.push(`/Waiting`);
   };
 
   const handleClick = () => {
-    router.push(`/Waiting`);
+    posts();
     return;
   };
 

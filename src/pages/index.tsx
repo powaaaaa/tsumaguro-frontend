@@ -1,12 +1,10 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import Link from "next/link";
-import HomePage from "./Home";
+import { useRouter } from "next/router";
 
-export default function Home() {
-  return (
-    <div>
-      <HomePage />
-    </div>
-  );
-}
+const Index = () => {
+  const router = useRouter();
+  if (router.isReady) {
+    router.push("/Home");
+  }
+};
+
+export default Index;

@@ -2,9 +2,10 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { IdType, postCookie } from "@/pages/axios";
 
-function PositionPage() {
+function RoundResultPage() {
   const router = useRouter();
-  const roomId = router.query.roomId_userId;
+  const roomId = router.query.roomId;
+
   const indexCustomNav = ({ room_id, user_id }: IdType) => {
     const status: number = 1;
 
@@ -26,7 +27,7 @@ function PositionPage() {
           pathname: `/Game/Questioning/${room_id}`,
           query: { id: user_id },
         });
-      case 3:
+      case 3: // お題確認
         router.push({
           pathname: `/Game/Answering/${room_id}`,
           query: { id: user_id },
@@ -83,14 +84,14 @@ function PositionPage() {
 
   return (
     <div>
-      <h1>役職配布(動的生成)[roomId: {roomId}]</h1>
+      <h1>ラウンド結果(動的生成)[roomId: {roomId}]</h1>
 
-      <div>インサイダーにお題を公開</div>
+      <div>ラウンドの結果を表示</div>
       <button type="button" onClick={indexCustom}>
-        質問へ
+        最終結果へ
       </button>
     </div>
   );
 }
 
-export default PositionPage;
+export default RoundResultPage;

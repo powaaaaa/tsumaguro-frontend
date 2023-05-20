@@ -109,8 +109,8 @@ function Setting1Page() {
             onInput={handleInputQ}
           ></input>
           
-          <Button type="button" onClick={handleClick} style={{fontSize:18 ,backgroundColor:'Gainsboro'}} className="hover: text-black">
-          <NavigateNextIcon sx={{ fontSize: 40 }}/>
+          <Button onClick={handleClick} style={{fontSize:18 ,backgroundColor:'Gainsboro'}} className="hover: text-black">
+          <NavigateNextIcon />
           決定
           </Button>
       </form>

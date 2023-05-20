@@ -1,29 +1,39 @@
 import Link from "next/link";
-import postCookie, { IdType, getGameStatus, resType, session1 } from "./axios";
+import { session1 } from "./axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { idState } from "./status";
 import Button from '@mui/material/Button';
 import { ClassNames } from "@emotion/react";
 import TextField from '@mui/material/TextField';
 import ReplyIcon from '@mui/icons-material/Reply';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import axios from "axios";
+import { atom } from "recoil";
+
+export const idState = atom({
+  key: "id",
+  default: 0,
 
 function Setting1Page() {
   const router = useRouter();
-  const [id, setId] = useRecoilState<resType>(idState);
+  const [id, setId] = useRecoilState(idState);
 
-  const posts = async (inputName: string) => {
-    const session: session1 = {
-      user_name: inputName,
-      session_id: document.cookie,
-      Id: id,
-      setId: setId,
-    };
-    postCookie(session);
-    router.push(`/Setting2`);
-  };
+  async function postCookie({
+    user_name: user_name,
+    session_id: session_id,
+  }: session1) {
+    try {
+      const url = "http://localhost:8000/create_user";
+      const res = await axios.post(url, { user_name, session_id });
+      setId(res.data.id);
+      router.push(`/Setting2`);
+      return;
+    } catch (e) {
+      console.error("post出来ませんでした\n", e);
+      return;
+    }
+  }
 
   const [inputText, setInputText] = useState("");
 
@@ -32,7 +42,11 @@ function Setting1Page() {
       alert("名前を入力してください");
       return;
     } else {
-      posts(inputText);
+      const session: session1 = {
+        user_name: inputText,
+        session_id: document.cookie,
+      };
+      postCookie(session);
       return;
     }
   };

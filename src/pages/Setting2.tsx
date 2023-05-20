@@ -1,17 +1,24 @@
-import postCookie, { postRoomInfo, session2 } from "./axios";
+import { session2 } from "./axios";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { idState } from "./status";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { idState } from "./Setting1";
+import axios from "axios";
+import { atom } from "recoil";
 
+export const room_idState = atom({
+  key: "room_id",
+  default: 0,
+});
 
 function Setting1Page() {
   const router = useRouter();
 
   const [id, setId] = useRecoilState(idState);
+  const [room_id, setRoom_id] = useRecoilState(room_idState);
   const [selectPnum, setSelectedPnum] = useState(3);
   const [selectQnum, setSelectQnum] = useState(3);
   const [selectRnum, setSelectRnum] = useState(1);
@@ -49,22 +56,53 @@ function Setting1Page() {
     setSelectQnum(Number(value));
   };
 
-  const posts = async () => {
+  const handleRouterPush = useCallback(() => {
+    router.push(`/Waiting/${room_id}`);
+  }, [room_id, router]);
+
+  useEffect(() => {
+    console.log(room_id);
+    if (room_id !== 0) {
+      handleRouterPush();
+    }
+  }, [room_id, handleRouterPush]);
+
+  async function postRoomInfo({
+    owner_id: owner_id,
+    participants_num: participants_num,
+    round_num: round_num,
+    questions_num: questions_num,
+  }: session2) {
+    try {
+      const url = "http://localhost:8000/create_room";
+      const res = await axios.post(url, {
+        owner_id,
+        participants_num,
+        round_num,
+        questions_num,
+      });
+      setRoom_id(res.data.room_id);
+      console.log("res:", res.data.room_id);
+      console.log("room_id: ", room_id);
+
+      if (room_id !== 0) {
+        router.push(`/Waiting/${room_id}`);
+      }
+      return;
+    } catch (e) {
+      console.error("post出来ませんでした\n", e);
+      return;
+    }
+  }
+
+  const handleClick = () => {
     const session: session2 = {
-      owner_id: id.id,
+      owner_id: id,
       participants_num: selectPnum,
       round_num: selectRnum,
       questions_num: selectQnum,
-      Id: id,
-      setId: setId,
     };
-    console.log(session);
     postRoomInfo(session);
-    router.push(`/Waiting`);
-  };
-
-  const handleClick = () => {
-    posts();
     return;
   };
 
@@ -92,7 +130,7 @@ function Setting1Page() {
           <input
             type="number"
             name="round_num"
-            min="3"
+            min="1"
             max="100"
             value={selectRnum}
             onInput={handleInputR}

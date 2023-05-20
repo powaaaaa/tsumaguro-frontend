@@ -3,6 +3,10 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { idState } from "./status";
+import Button from '@mui/material/Button';
+import Link from "next/link";
+import ReplyIcon from '@mui/icons-material/Reply';
+
 
 function Setting1Page() {
   const router = useRouter();
@@ -66,7 +70,7 @@ function Setting1Page() {
 
   return (
     <div>
-      <h2>Setting Page</h2>
+      <h2>Setting 1</h2>
       <div>ルーム作成2</div>
 
       <form>
@@ -108,6 +112,14 @@ function Setting1Page() {
           決定
         </button>
       </form>
+      <div>
+        <Button variant="contained" style={{backgroundColor:'Gainsboro'}}  className="absolute left-10 bottom-10  text-black">
+          <Link href={"http://localhost:3000/Setting1"}>
+             <ReplyIcon sx={{ fontSize: 40 }}  />
+             setting1に戻る
+          </Link>
+        </Button>
+      </div>
     </div>
   );
 }

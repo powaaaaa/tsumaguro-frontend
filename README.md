@@ -113,10 +113,19 @@ sequenceDiagram
     participant db as DBサーバ
     participant ai as Chat GPT
     user->>front: Topページアクセス
-    user->>front: settingページにRequest
+    front->>user: home画面を表示
+    user->>front: ルーム作成1ページにRequest
     Note over user1,front: ルーム作成
-    front->>user: 詳細設定を表示
-    user->>front: 詳細設定を選択
+    front->>user: ルーム作成1を表示
+    user->>front: ユーザ名を選択
+    front->>api: 選択を送信
+    api->>db: ユーザ情報を確認
+    db->>api: 返却
+    api->>db: ユーザ情報を登録
+    db->>api: 返却
+    api->>front: 返却
+    front->>user: ルーム作成2を表示
+    user->>front: ルーム設定を選択
     front->>api: 選択を送信
     api->>db: ルーム情報を登録
     db->>api: 返却
@@ -128,12 +137,18 @@ sequenceDiagram
     front->>api: 選択を送信
     api->>db: ルーム情報を確認
     db->>api: 返却
+    api->>db: ユーザ情報を登録
+    db->>api: 返却
+    api->>db: ユーザ情報を登録
+    db->>api: 返却
     api->>front:　返却
     front->>user1: 待機画面を表示
     loop ラウンド数
         Note over user1,front: ゲーム開始
         user->>front: ゲーム開始
         front->>api: 選択を送信
+        api->>db: お題を確認
+        db->>api: 返却
         api->>db: ルーム情報を更新
         db->>api: 返却
         api->>front: 返却
@@ -141,6 +156,8 @@ sequenceDiagram
         user->>front: 質問開始
         front->>api: 選択を送信
         api->>db: ルーム情報を更新
+        db->>api: 返却
+        api->>db: ルーム情報を確認
         db->>api: 返却
         api->>front: 返却
         front->>user: 質問入力欄を表示
@@ -150,23 +167,33 @@ sequenceDiagram
             front->>api: 質問を送信
             api->>ai: 質問を送信
             ai->>api: 返却
+            api->>db: ルーム情報を更新
+            db->>api: 返却
+            api->>db: ルーム情報を確認
+            db->>api: 返却
             api->>front: 返却
             front->>user: 返却
         end
         Note over user1,front: 答え合わせ
         user->>front: 答えを選択
         front->>api: 選択を送信
-        api->>db: ルーム情報を更新&確認
+        api->>db: ルーム情報を確認
         db->>api: 返却
         api->>ai: お題と答えの確認
         ai->>api: 返却
+        api->>db: ルーム情報を更新
+        db->>api: 返却
+        api->>db: ルーム情報を確認
+        db->>api: 返却
         api->>front: 返却
         front->>user: 結果を表示
         opt 答え==お題の時
             Note over user,front: インサイダーを投票
             user->>front: インサイダーを投票
             front->>api: 選択を送信
-            api->>db: ルーム情報を確認&更新
+            api->>db: ルーム情報を更新
+            db->>api: 返却
+            api->>db: ルーム情報を確認
             db->>api: 返却
             api->>front: 返却
             front->>user: インサイダーを表示
@@ -175,58 +202,59 @@ sequenceDiagram
         front->>api: 選択を送信
         api->>db: ルーム情報を確認&更新
         db->>api: 返却
+        api->>db: ユーザ情報の更新
+        db->>api: 返却
+        api->>db: ユーザ情報の確認
+        db->>api: 返却
         api->>front: 返却
         front->>user: ラウンド結果を表示
-        opt 全ラウンド終了時
-            Note over user,front: 最終結果の発表
-            user->>front: 最終結果を表示
-            front->>api: 問い合わせ
-            api->>db: ルーム情報を確認
-            db->>api: 返却
-            api->>front: 返却
-            front->>user: 最終結果を表示
-        end
-
     end
+    Note over user,front: 最終結果の発表
+    user->>front: 最終結果を表示
+    front->>api: 問い合わせ
+    api->>db: ユーザ情報を確認
+    db->>api: 返却
+    api->>front: 返却
+    front->>user: 最終結果を表示
+        
     Note over user1,front: ゲーム終了
 ```
 
-# 画面遷移
+# 画面遷移  
+* home(/)  
+ルール説明とルーム作成  
 
-- home(/)  
-  ルール説明とルーム作成
+* ルーム作成(/setting)  
+ユーザ名，部屋名，プレイヤー人数，質問回数，ラウンド数を設定
 
-- ルーム作成(/setting)  
-  ユーザ名，部屋名，プレイヤー人数，質問回数，ラウンド数を設定
+* ルーム入室(/{room_id})  
+ユーザ名を登録  
 
-- ルーム入室(/{room_id})  
-  ユーザ名を登録
+* 参加者待機(/waiting/{room_id}?id={user_id})  
+現在の参加者を表示  
 
-- 参加者待機(/waiting/{room_id}?id={user_id})  
-  現在の参加者を表示
+* 役職配布(/position/{room_id}?id={user_id})  
+インサイダーにお題を公開  
 
-- 役職配布(/position/{room_id}?id={user_id})  
-  インサイダーにお題を公開
+* 質問(/questioning/{room_id}?id={user_id})  
+テキストボックスに質問を入力(みんなの質問が揃うまで進行無し)  
 
-- 質問(/questioning/{room_id}?id={user_id})  
-  テキストボックスに質問を入力(みんなの質問が揃うまで進行無し)
+* 答え合わせ(/answering/{room_id}?id={user_id})  
+お題と答えが一致するか表示  
 
-- 答え合わせ(/answering/{room_id}?id={user_id})  
-  お題と答えが一致するか表示
+* インサイダー投票(/voting/{room_id}?id={user_id})  
+誰がインサイダーか投票(お題を間違えた場合表示されない)  
 
-- インサイダー投票(/voting/{room_id}?id={user_id})  
-  誰がインサイダーか投票(お題を間違えた場合表示されない)
+* インサイダー投票結果(/voting_result/{room_id}?id={user_id})  
+誰がインサイダーか表示(お題を間違えた場合表示されない)  
 
-- インサイダー投票結果(/vote_result/{room_id})  
-  誰がインサイダーか表示(お題を間違えた場合表示されない)
+* ラウンド結果(/round_result/{room_id}?id={user_id})  
+ラウンドの結果を表示  
 
-- ラウンド結果(/round_result/{room_id})  
-  ラウンドの結果を表示
+* 最終結果(/final_result/{room_id}?id={user_id})   
+全ての得点を表示
 
-- 最終結果(/final_result/{room_id})  
-  全ての得点を表示
-
-役職配布からラウンド結果までは一つにまとめても良い
+役職配布からラウンド結果までは一つにまとめても良い  
 
 # ゲームステータス
 

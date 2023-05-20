@@ -65,8 +65,6 @@ function WaitingPage() {
   };
 
   const indexCustom = async () => {
-    var str = document.cookie;
-    console.log("aa");
     try {
       // postCookie(str);
       // const Ids: IdType = await getId();

@@ -4,6 +4,8 @@ import { IdType, postCookie } from "@/pages/axios";
 import Button from "@mui/material/Button";
 import CommentIcon from '@mui/icons-material/Comment';
 
+const job = 1;
+
 function PositionPage() {
   const router = useRouter();
   const roomId = router.query.roomId_userId;
@@ -89,14 +91,46 @@ function PositionPage() {
       <div className="absolute left-28" style={{backgroundColor:'Silver'}}>
         ~役職公開~
       </div>
-      <div  className="h-72" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
+      <div  className="h-28" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
 
-      <div style={{ fontSize: "20px", }}>インサイダーにお題を公開</div>
+      <div style={{ fontSize: "20px",display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        あなたは
+      <div style={{color:'red'}} >
+          (ここに値を代入)
+        </div>
+        です。
+      </div>
+      <br/>
+      </div>
+
+      <div  className="h-28" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
+      {Number(job) === 1 ? (
+      <div style={{ fontSize: "30px" ,display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        今回のキーワードは
+        <div style={{color:'red'}} >
+        (ここに値を代入)
+        </div>
+        です。
+      </div>
+    ) : (
+      <div style={{ fontSize: "30px", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        今回のジャンルは
+        <div style={{color:'red'}} >
+          (ここに値を代入)
+        </div>
+          です。
+      </div>
+    )}
+      </div>
+      
+
+      <div className="h-16" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
       <Button onClick={indexCustom} style={{fontSize:18 ,backgroundColor:'Gainsboro'}} className="hover: text-black">
         <CommentIcon sx={{ fontSize: 40 }}/>
         質問へ
       </Button>
-    </div>
+      </div >
+
     </div>
   );
 }

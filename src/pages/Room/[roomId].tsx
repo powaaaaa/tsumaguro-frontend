@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
-import indexCustom from "../indexCustom";
 
 function RoomDetail() {
   const router = useRouter();

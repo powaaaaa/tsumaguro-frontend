@@ -8,6 +8,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import Button from '@mui/material/Button';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -145,7 +147,7 @@ function PlayingPage() {
       <div>
 
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+        <InputLabel id="demo-multiple-name-label">ユーザー名</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
@@ -168,10 +170,12 @@ function PlayingPage() {
       </FormControl>
 
       </div>
-      <button type="button" onClick={indexCustom}>
-        インサイダー投票結果へ
-      </button>
+      <Button type="button" style={{fontSize:18 ,backgroundColor:'Gainsboro'}} className="hover: text-black">
+          <AssignmentTurnedInIcon sx={{ fontSize: 30 }}/>
+          投票確定
+        </Button>
       </div>
+
     </div>
   );
 }

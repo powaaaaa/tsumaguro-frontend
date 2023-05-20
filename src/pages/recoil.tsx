@@ -8,9 +8,8 @@ export const idState = atom({
   default: 0,
 });
 
-const [id, setId] = useRecoilState(idState);
-
 function setResId(num: number) {
+  const [id, setId] = useRecoilState(idState);
   setId(id);
   return;
   //   return (
@@ -21,6 +20,7 @@ function setResId(num: number) {
 }
 
 export function getResId() {
+  const [id, setId] = useRecoilState(idState);
   return id;
 }
 

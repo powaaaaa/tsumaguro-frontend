@@ -1,69 +1,80 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { IdType, postCookie } from "@/pages/axios";
 import Button from "@mui/material/Button";
 import CommentIcon from '@mui/icons-material/Comment';
-
+import { useRecoilState } from "recoil";
+import { idState } from "../../Setting1";
+import { room_idState } from "../../Setting2";
+import axios from "axios";
 const job = 1;
 
 function PositionPage() {
   const router = useRouter();
   const roomId = router.query.roomId_userId;
-  const indexCustomNav = ({ room_id, user_id }: IdType) => {
-    const status: number = 1;
+
+  // ゲーミングステータスを取得
+  const [id, setId] = useRecoilState(idState);
+  const [room_id, setRoom_id] = useRecoilState(room_idState);
+  let startFlag = true; // ここ
+  let owner_id = 0;
+
+  const getGameStatus = async () => {
+    const response = await axios.get(`http://localhost:8000/room/${room_id}`);
+    const resData = response.data;
+    const status = resData.game_status;
+    console.log("status", status);
+    return;
+  };
+  getGameStatus();
+
+  // 分岐
+  const indexCustomNav = async (room_id: number) => {
+    // const status = await getGameStatus();
+    const status: number = 2; // ここ
 
     switch (status) {
       case 0:
         router.push({
           pathname: `/Waiting/${room_id}`,
-          query: { id: user_id },
         });
         break;
       case 1:
         router.push({
           pathname: `/Game/Position/${room_id}`,
-          query: { id: user_id },
         });
         break;
       case 2:
         router.push({
           pathname: `/Game/Questioning/${room_id}`,
-          query: { id: user_id },
         });
       case 3:
         router.push({
           pathname: `/Game/Answering/${room_id}`,
-          query: { id: user_id },
         });
         break;
       case 4:
         router.push({
           pathname: `/Game/Voting/${room_id}`,
-          query: { id: user_id },
         });
         break;
       case 5:
         router.push({
           pathname: `/Game/Voting_result/${room_id}`,
-          query: { id: user_id },
         });
         break;
       case 6:
         router.push({
           pathname: `/Round_result/${room_id}`,
-          query: { id: user_id },
         });
         break;
       case 7:
         router.push({
           pathname: `/Game/Position/${room_id}`,
-          query: { id: user_id },
         });
         break;
       case 8:
         router.push({
           pathname: `/Final_result/${room_id}`,
-          query: { id: user_id },
         });
         break;
       default:
@@ -74,13 +85,10 @@ function PositionPage() {
   const indexCustom = async () => {
     var str = document.cookie;
     try {
-      postCookie(str);
+      indexCustomNav(room_id);
       // const Ids: IdType = await getId();
-      const Ids: IdType = { room_id: "a", user_id: "b" };
-      console.log(Ids);
-      indexCustomNav(Ids);
     } catch (e) {
-      console.error("room_id, user_idの取得に失敗しました", e);
+      console.error("room_idの取得に失敗しました", e);
       return;
     }
   };

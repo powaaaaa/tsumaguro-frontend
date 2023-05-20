@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { idState } from "./status";
+import Button from '@mui/material/Button';
+import { ClassNames } from "@emotion/react";
 
 function Setting1Page() {
   const router = useRouter();
@@ -34,15 +36,13 @@ function Setting1Page() {
 
   return (
     <div>
-      <h2>Setting Page</h2>
-      <div>
-        ルーム作成2
+      <h2 style={{ fontSize: "50px", }}>Setting Page</h2>
+        <div className="h-72" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
+        ~ユーザー名を設定~
         <br />
-        ユーザー名を設定
-      </div>
 
       <form>
-        <label>
+        <label style={{fontSize: 20}}>
           ユーザー名を入力してください
           <input
             type="text"
@@ -52,10 +52,11 @@ function Setting1Page() {
           ></input>
         </label>
 
-        <button type="button" onClick={handleClick}>
+        <Button type="button" onClick={handleClick} style={{fontSize:20 ,backgroundColor:'Gainsboro'}} className="hover: text-black">
           決定
-        </button>
+        </Button>
       </form>
+      </div>
     </div>
   );
 }

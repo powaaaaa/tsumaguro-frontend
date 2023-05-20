@@ -148,7 +148,7 @@ function WaitingPage() {
           gap: "20px",
         }}
       >
-
+        {partyNum}/{}
       </div>
     </div>
   );

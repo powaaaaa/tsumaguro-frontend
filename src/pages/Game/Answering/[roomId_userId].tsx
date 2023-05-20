@@ -1,7 +1,5 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { IdType, postCookie } from "@/pages/axios";
-
 function PlayingPage() {
   const router = useRouter();
   const roomId = router.query.roomId_userId;

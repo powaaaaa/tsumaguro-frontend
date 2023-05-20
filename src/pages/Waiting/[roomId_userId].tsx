@@ -23,7 +23,7 @@ function WaitingPage() {
     if (owner_id === id) {
       startFlag = true;
     }
-    return status;
+    return;
   };
   getGameStatus();
 

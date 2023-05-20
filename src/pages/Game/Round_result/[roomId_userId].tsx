@@ -84,7 +84,15 @@ function RoundResultPage() {
 
   return (
     <div>
-      <h1>ラウンド結果(動的生成)[roomId: {roomId}]</h1>
+      <h1 style={{ fontSize: "50px", }}>Voting_result(動的生成)[roomId: {roomId}]</h1>
+
+      <div className="absolute left-28" style={{backgroundColor:'Silver'}}>
+      ラウンド結果
+      </div>
+
+      <div  className="h-72" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
+        
+      </div>
 
       <div>ラウンドの結果を表示</div>
       <button type="button" onClick={indexCustom}>

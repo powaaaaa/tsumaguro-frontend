@@ -20,16 +20,59 @@ function SettingPage() {
       <h2 style={{ fontSize: '50px' }}>
         Setting Page
       </h2>
-      <div>
-        ルーム作成
-        <br />
-        ユーザー名、部屋名、プレイヤー人数、質問回数、ラウンド数を設定
+      <div className="h-96" style={{display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
+        <br/>
+        <Box className="h-64 w-52" style={{backgroundColor: 'Silver' }} sx={{borderRadius: '10px',fontSize: 25}}>
+          <div className="" style={{display: 'flex',justifyContent: 'center',  alignItems: 'center' }}>
+          ユーザー名
+          </div>
+        <br/>
+        <div style={{display: 'flex',justifyContent: 'center'}}>
+        <Box className="top-0 h-44 w-44" style={{backgroundColor:'Gainsboro'}} sx={{borderRadius: '10px'}}>
+
+        </Box>
+        </div>
+        </Box>
+        <br/>
+        <Box className="h-64 w-52" style={{backgroundColor: 'Silver' }} sx={{borderRadius: '10px',fontSize: 25}}>
+          <div style={{display: 'flex',justifyContent: 'center',  alignItems: 'center' }}>
+          人数
+          </div>
+        <br/>
+        <div style={{display: 'flex',justifyContent: 'center'}}>
+        <Box className="top-0 h-44 w-44" style={{backgroundColor:'Gainsboro'}} sx={{borderRadius: '10px'}}>
+
+        </Box>
+        </div>
+        </Box>
+        <br/>
+        <Box className="h-64 w-52" style={{backgroundColor: 'Silver' }} sx={{borderRadius: '10px',fontSize: 25}}>
+          <div style={{display: 'flex',justifyContent: 'center',  alignItems: 'center' }}>
+          質問の数
+          </div>
+        <br/>
+        <div style={{display: 'flex',justifyContent: 'center'}}>
+        <Box className="top-0 h-44 w-44" style={{backgroundColor:'Gainsboro'}} sx={{borderRadius: '10px'}}>
+
+        </Box>
+        </div>
+        </Box>
+        <br/>
+        <Box className="h-64 w-52" style={{backgroundColor: 'Silver' }} sx={{borderRadius: '10px',fontSize: 25}}>
+          <div style={{display: 'flex',justifyContent: 'center',  alignItems: 'center' }}>
+          ユーザー名
+          </div>
+        <br/>
+        <div style={{display: 'flex',justifyContent: 'center'}}>
+        <Box className="top-0 h-44 w-44" style={{backgroundColor:'Gainsboro'}} sx={{borderRadius: '10px'}}>
+
+        </Box>
+        </div>
+        </Box>
       </div>
 
       <Link href={`/Room/${room_id}`}>ルーム入室</Link>
     </div>
-
-    <div className="abusolute h-72"></div>
 
 <div>
   <Button variant="contained" style={{backgroundColor:'Gainsboro'}}  className="absolute left-10 bottom-10  text-black">

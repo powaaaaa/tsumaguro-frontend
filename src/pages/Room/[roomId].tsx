@@ -24,11 +24,12 @@ function RoomPage() {
     session_id: session_id,
   }: session1) {
     try {
-      const url = `http://localhost:8000/room/1`;
+      const { roomId } = router.query;
+      const url = `http://localhost:8000/room/${roomId}`;
       const res = await axios.post(url, { user_name, session_id });
       setPid(res.data.id);
       console.log(res.data.id);
-      router.push(`/Waiting/${room_id}`);
+      router.push(`/Waiting/${roomId}`);
       return;
     } catch (e) {
       console.error("post出来ませんでした\n", e);

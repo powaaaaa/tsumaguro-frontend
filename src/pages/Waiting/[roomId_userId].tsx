@@ -19,11 +19,13 @@ function WaitingPage() {
     const resData = response.data;
     const status = resData.game_status;
     owner_id = resData.owner_id;
+    console.log("status", status);
     if (owner_id === id) {
       startFlag = true;
     }
     return status;
   };
+  getGameStatus();
 
   // 分岐
   const indexCustomNav = async (room_id: number) => {

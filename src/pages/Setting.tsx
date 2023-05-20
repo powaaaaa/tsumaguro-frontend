@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 function SettingPage() {
   // room_idを取得
@@ -23,13 +24,13 @@ function SettingPage() {
       <div className="h-96" style={{display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
         <br/>
         <Box className="h-64 w-52" style={{backgroundColor: 'Silver' }} sx={{borderRadius: '10px',fontSize: 25}}>
-          <div className="" style={{display: 'flex',justifyContent: 'center',  alignItems: 'center' }}>
+          <div style={{display: 'flex',justifyContent: 'center',  alignItems: 'center' }}>
           ユーザー名
           </div>
         <br/>
         <div style={{display: 'flex',justifyContent: 'center'}}>
-        <Box className="top-0 h-44 w-44" style={{backgroundColor:'Gainsboro'}} sx={{borderRadius: '10px'}}>
-
+        <Box className="top-0 h-44 w-44" style={{backgroundColor:'Gainsboro',display: 'flex',justifyContent: 'center',  alignItems: 'center' }} sx={{borderRadius: '10px'}}>
+          <TextField id="outlined-basic" label="ユーザー名" variant="outlined" />
         </Box>
         </div>
         </Box>
@@ -64,7 +65,7 @@ function SettingPage() {
           </div>
         <br/>
         <div style={{display: 'flex',justifyContent: 'center'}}>
-        <Box className="top-0 h-44 w-44" style={{backgroundColor:'Gainsboro'}} sx={{borderRadius: '10px'}}>
+        <Box className="top-0 h-44 w-44" style={{backgroundColor:'Gainsboro',display: 'flex',justifyContent: 'center',  alignItems: 'center'}} sx={{borderRadius: '10px'}}>
 
         </Box>
         </div>

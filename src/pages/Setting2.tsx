@@ -58,11 +58,11 @@ function Setting1Page() {
 
   const handleRouterPush = useCallback(() => {
     router.push(`/Waiting/${room_id}`);
-  }, [room_id, router]);
+  }, [room_id]);
 
   useEffect(() => {
-    console.log(room_id);
-    if (room_id !== 0) {
+    console.log("room_id", room_id);
+    if (room_id > 0) {
       handleRouterPush();
     }
   }, [room_id, handleRouterPush]);
@@ -82,8 +82,7 @@ function Setting1Page() {
         questions_num,
       });
       setRoom_id(res.data.room_id);
-      console.log("res:", res.data.room_id);
-      console.log("room_id: ", room_id);
+      console.log("response(room_id):", res.data.room_id);
 
       if (room_id !== 0) {
         router.push(`/Waiting/${room_id}`);

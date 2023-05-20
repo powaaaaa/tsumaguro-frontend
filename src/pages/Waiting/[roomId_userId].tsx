@@ -6,13 +6,28 @@ import { useRecoilState } from "recoil";
 import { idState } from "../Setting1";
 import { room_idState } from "../Setting2";
 
+// ゲーミングステータスを取得
 function WaitingPage() {
   const router = useRouter();
   const [id, setId] = useRecoilState(idState);
   const [room_id, setRoom_id] = useRecoilState(room_idState);
+  let startFlag = false;
+  let owner_id = 0;
 
+  const getGameStatus = async () => {
+    const response = await axios.get(`http://localhost:8000/room/${room_id}`);
+    const resData = response.data;
+    const status = resData.game_status;
+    owner_id = resData.owner_id;
+    if (owner_id === id) {
+      startFlag = true;
+    }
+    return status;
+  };
+
+  // 分岐
   const indexCustomNav = async (room_id: number) => {
-    const status: number = await getGameStatus();
+    const status = await getGameStatus();
 
     switch (status) {
       case 0:
@@ -65,47 +80,56 @@ function WaitingPage() {
   };
 
   const indexCustom = async () => {
-    try {
-      // postCookie(str);
-      // const Ids: IdType = await getId();
-      const Ids = room_id;
-      console.log(Ids);
-      indexCustomNav(Ids);
-    } catch (e) {
-      console.error("room_id, user_idの取得に失敗しました", e);
-      return;
+    if (startFlag) {
+      indexCustomNav(room_id);
+    } else {
+      console.log("this is false");
+      return startFlag;
     }
   };
 
-  const [dataList, setDataList] = useState<string[]>([]);
+  // 1秒間に1回、waiting/[user_id]にpostして人数確認
+  const [resCount, setResCount] = useState(0);
 
   useEffect(() => {
-    const axiosData = () => {
-      axios(`http://localhost:8000/waiting/1`)
-        .then((response) => response.data())
-        .then((data) => {
-          setDataList((prevDataList) => [...prevDataList, data]);
-        })
-        .catch((error) => {
-          console.log("Ajaxリクエスト中にエラーが発生しました", error);
-        });
+    const fetchGetWaiting = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/waiting/${room_id}`
+        );
+        const resData = response.data as object[];
+        setResCount(resData.length);
+        console.log("rescount", resCount);
+      } catch (e) {
+        console.error("リクエスト中にエラーが発生しました。", e);
+      }
     };
 
-    const interval = setInterval(axiosData, 1000);
+    const interval = setInterval(fetchGetWaiting, 1000);
 
     return () => {
       clearInterval(interval);
     };
   }, []);
 
-  //   return (
-  //     <div>
-  //       {dataList.map((data, index) => (
-  //         <div key={index}>{data}</div>
-  //       ))}
-  //     </div>
-  //   );
-  // };
+  // 人数が揃ったらゲーム開始
+  const [partyNum, setPartyNum] = useState(0);
+  useEffect(() => {
+    const fetchPostWaiting = async () => {
+      try {
+        const response = await axios.post(
+          `http://localhost:8000/room/${room_id}`
+        );
+        const resData = response.data;
+        setPartyNum(resData.participants_num);
+      } catch (e) {
+        console.error("post中にエラーが発生しました。", e);
+      }
+    };
+
+    if (partyNum === resCount) {
+    }
+  }, [resCount]);
 
   return (
     <div>

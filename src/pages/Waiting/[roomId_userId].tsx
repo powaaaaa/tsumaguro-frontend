@@ -11,7 +11,7 @@ function WaitingPage() {
   const router = useRouter();
   const [id, setId] = useRecoilState(idState);
   const [room_id, setRoom_id] = useRecoilState(room_idState);
-  let startFlag = false;
+  let startFlag = true; // ここ
   let owner_id = 0;
 
   const getGameStatus = async () => {
@@ -27,7 +27,8 @@ function WaitingPage() {
 
   // 分岐
   const indexCustomNav = async (room_id: number) => {
-    const status = await getGameStatus();
+    // const status = await getGameStatus();
+    const status: number = 1; // ここ
 
     switch (status) {
       case 0:

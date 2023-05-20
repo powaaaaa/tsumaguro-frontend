@@ -1,6 +1,9 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { IdType, postCookie } from "@/pages/axios";
+import Button from '@mui/material/Button';
+import ScoreboardIcon from '@mui/icons-material/Scoreboard';
+
 
 function RoomDetail() {
   const router = useRouter();
@@ -84,12 +87,21 @@ function RoomDetail() {
 
   return (
     <div>
-      <h1>インサイダー投票結果(動的生成)[roomId: {roomId}]</h1>
+      <h1 style={{ fontSize: "50px", }}>Voting_result(動的生成)[roomId: {roomId}]</h1>
 
-      <div>投票結果を表示</div>
-      <button type="button" onClick={indexCustom}>
+      <div className="absolute left-28" style={{backgroundColor:'Silver'}}>
+      インサイダー投票結果
+      </div>
+
+      <div  className="h-72" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
+
+      </div>
+      <div className="absolute right-10 bottom-10">
+      <Button onClick={indexCustom} style={{fontSize:18 ,backgroundColor:'Gainsboro'}} className="hover: text-black">
+          <ScoreboardIcon sx={{ fontSize: 40 }}/>
         ラウンド結果へ
-      </button>
+      </Button>
+      </div>
     </div>
   );
 }

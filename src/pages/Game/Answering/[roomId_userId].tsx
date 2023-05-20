@@ -1,8 +1,12 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { IdType, postCookie } from "@/pages/axios";
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import ReplyIcon from '@mui/icons-material/Reply';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
-Const host = 1;
+const host = 1;
 
 function PlayingPage() {
   const router = useRouter();
@@ -94,13 +98,28 @@ function PlayingPage() {
 
       <div  className="h-72" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
       {Number(host) === 1 ? (
-      <div style={{ fontSize: "30px" ,display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        
+      <div style={{gap:'20px', fontSize: "30px" ,display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{fontSize: 30}}>
+          話し合って決まったキーワードを入力してください。
+        </div>
+          <TextField id="outlined-basic" label="答え" variant="outlined">
+
+          </TextField>
+
+
+          <div>
+        <Button type="button"  style={{fontSize:18 ,backgroundColor:'Gainsboro'}} className="hover: text-black">
+          <NavigateNextIcon sx={{ fontSize: 40 }}/>
+          決定
+        </Button>
+      </div>
       </div>
     ) : (
       <div style={{ fontSize: "30px", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-       
+      解答権はホストが所持しています。話し合ってください。
       </div>
+      )}
+       
       </div>
       
     </div>

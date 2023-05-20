@@ -1,9 +1,12 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Button from "@mui/material/Button";
+import CommentIcon from '@mui/icons-material/Comment';
 import { useRecoilState } from "recoil";
 import { idState } from "../../Setting1";
 import { room_idState } from "../../Setting2";
 import axios from "axios";
+const job = 1;
 
 function PositionPage() {
   const router = useRouter();
@@ -92,12 +95,50 @@ function PositionPage() {
 
   return (
     <div>
-      <h1>役職配布(動的生成)[roomId: {roomId}]</h1>
+      <h1 style={{ fontSize: "50px", }}>Position(動的生成)[roomId: {roomId}]</h1>
+      <div className="absolute left-28" style={{backgroundColor:'Silver'}}>
+        ~役職公開~
+      </div>
+      <div  className="h-28" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
 
-      <div>インサイダーにお題を公開</div>
-      <button type="button" onClick={indexCustom}>
+      <div style={{ fontSize: "20px",display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        あなたは
+      <div style={{color:'red'}} >
+          (ここに値を代入)
+        </div>
+        です。
+      </div>
+      <br/>
+      </div>
+
+      <div  className="h-28" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
+      {Number(job) === 1 ? (
+      <div style={{ fontSize: "30px" ,display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        今回のキーワードは
+        <div style={{color:'red'}} >
+        (ここに値を代入)
+        </div>
+        です。
+      </div>
+    ) : (
+      <div style={{ fontSize: "30px", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        今回のジャンルは
+        <div style={{color:'red'}} >
+          (ここに値を代入)
+        </div>
+          です。
+      </div>
+    )}
+      </div>
+      
+
+      <div className="h-16" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
+      <Button onClick={indexCustom} style={{fontSize:18 ,backgroundColor:'Gainsboro'}} className="hover: text-black">
+        <CommentIcon sx={{ fontSize: 40 }}/>
         質問へ
-      </button>
+      </Button>
+      </div >
+
     </div>
   );
 }

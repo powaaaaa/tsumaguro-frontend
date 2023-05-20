@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import { ClassNames } from "@emotion/react";
 import TextField from '@mui/material/TextField';
 import ReplyIcon from '@mui/icons-material/Reply';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 function Setting1Page() {
   const router = useRouter();
@@ -38,7 +39,7 @@ function Setting1Page() {
 
   return (
     <div>
-      <h2 style={{ fontSize: "50px", }}>Setting Page</h2>
+      <h2 style={{ fontSize: "50px", }}>Setting Page 1</h2>
       <div className="absolute left-28" style={{backgroundColor:'Silver'}}>
         ~ユーザー名を設定~
       </div>
@@ -56,6 +57,7 @@ function Setting1Page() {
         
 
         <Button type="button" onClick={handleClick} style={{fontSize:18 ,backgroundColor:'Gainsboro'}} className="hover: text-black">
+          <NavigateNextIcon sx={{ fontSize: 40 }}/>
           決定
         </Button>
       </form>

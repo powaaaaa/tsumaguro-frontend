@@ -1,11 +1,35 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getGameStatus } from "../axios";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { idState } from "../Setting1";
 import { room_idState } from "../Setting2";
+import * as React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import { ConstructionRounded } from "@mui/icons-material";
+
+function createData(
+  UserName: string,
+  Id: number,
+  host: string
+) {
+  return { UserName,Id,host};
+}
+
+const rows = [
+  createData('a',111,'y'),
+  createData('b',112,'n'),
+  createData('c',121,'n'),
+  createData('d',122,'n'),
+  createData('e',211,'n'),
+];
 
 // ゲーミングステータスを取得
 function WaitingPage() {
@@ -141,13 +165,50 @@ function WaitingPage() {
   const URL = `./Room/${room_id}`;
 
   return (
+    <div>
+      <h1 style={{ fontSize: "50px" }}>Waiting</h1>
+
+      <div
+        className="h-72"
+        style={{
+          backgroundColor: "Silver",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "20px",
+        }}
+      >
+
+<TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell>UserName</TableCell>
+            <TableCell align="right">Id</TableCell>
+            <TableCell align="right">host</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow
+              key={row.UserName}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {row.UserName}
+              </TableCell>
+              <TableCell align="right">{row.Id}</TableCell>
+              <TableCell align="right">{row.host}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
     <div className="flex flex-col">
       <h1>待機中……</h1>
       <div>{URL}を送って招待しよう！</div>
 
-      <button type="button" onClick={indexCustom}>
-        ゲームプレイへ
-      </button>
+      </div>
     </div>
   );
 }

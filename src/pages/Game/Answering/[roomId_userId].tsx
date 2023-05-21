@@ -105,23 +105,9 @@ function AnsweringPage() {
     }
   };
 
-  const indexCustom = async () => {
-    var str = document.cookie;
-    try {
-      postCookie(str);
-      // const Ids: IdType = await getId();
-      const Ids: IdType = { room_id: "a", user_id: "b" };
-      console.log(Ids);
-      indexCustomNav(Ids);
-    } catch (e) {
-      console.error("room_id, user_idの取得に失敗しました", e);
-      return;
-    }
-  };
-
   return (
     <div>
-      <h1>答え合わせ(動的生成)[roomId: {roomId}]</h1>
+      <h1>答え合わせ(動的生成)</h1>
 
       <div>お題と答えが一致するか表示</div>
       <button type="button" onClick={indexCustom}>

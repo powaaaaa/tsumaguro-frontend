@@ -1,10 +1,37 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getGameStatus } from "../axios";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { idState } from "../Setting1";
 import { room_idState } from "../Setting2";
+import * as React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
+function createData(
+  UserName: string,
+  Id: number,
+  host: string,
+  score: number,
+  job: string
+) {
+  return { UserName,Id,host, score, job };
+}
+
+const rows = [
+  createData('a',111 ,'y',212,'c'),
+  createData('b',112,'n' ,221,'c'),
+  createData('c',121,'n' ,222,'i'),
+  createData('d',122,'n' ,222,'c'),
+  createData('e',211,'n' ,222,'c'),
+];
+
 
 // ゲーミングステータスを取得
 function WaitingPage() {
@@ -148,7 +175,37 @@ function WaitingPage() {
           gap: "20px",
         }}
       >
-        {partyNum}/{}
+
+<TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell>UserName</TableCell>
+            <TableCell align="right">Id</TableCell>
+            <TableCell align="right">host</TableCell>
+            <TableCell align="right">score</TableCell>
+            <TableCell align="right">job</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow
+              key={row.UserName}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {row.UserName}
+              </TableCell>
+              <TableCell align="right">{row.Id}</TableCell>
+              <TableCell align="right">{row.host}</TableCell>
+              <TableCell align="right">{row.score}</TableCell>
+              <TableCell align="right">{row.job}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+
       </div>
     </div>
   );

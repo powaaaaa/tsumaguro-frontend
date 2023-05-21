@@ -1,22 +1,16 @@
 // 参加者のユーザー登録
 
-import Link from "next/link";
 import { session1 } from "../axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import axios from "axios";
-import { atom } from "recoil";
+import { idState } from "../Setting1";
 import { room_idState } from "../Setting2";
-
-export const PidState = atom({
-  key: "Pid",
-  default: 0,
-});
 
 function RoomPage() {
   const router = useRouter();
-  const [Pid, setPid] = useRecoilState(PidState);
+  const [id, setid] = useRecoilState(idState);
   const [room_id, setRoom_id] = useRecoilState(room_idState);
 
   async function postCookie({
@@ -27,7 +21,7 @@ function RoomPage() {
       const { roomId } = router.query;
       const url = `http://localhost:8000/room/${roomId}`;
       const res = await axios.post(url, { user_name, session_id });
-      setPid(res.data.id);
+      setid(res.data.id);
       console.log(res.data.id);
       router.push(`/Waiting/${roomId}`);
       return;

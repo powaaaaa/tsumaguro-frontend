@@ -56,22 +56,11 @@ function Setting1Page() {
     setSelectQnum(Number(value));
   };
 
-  const handleRouterPush = useCallback(() => {
-    router.push(`/Waiting/${room_id}`);
-  }, [room_id]);
-
-  useEffect(() => {
-    console.log("room_id", room_id);
-    if (room_id > 0) {
-      handleRouterPush();
-    }
-  }, [room_id, handleRouterPush]);
-
   async function postRoomInfo({
     owner_id: owner_id,
     participants_num: participants_num,
     round_num: round_num,
-    questions_num: questions_num,
+    remaining_questions_num: remaining_questions_num,
   }: session2) {
     try {
       const url = "http://localhost:8000/create_room";
@@ -79,14 +68,12 @@ function Setting1Page() {
         owner_id,
         participants_num,
         round_num,
-        questions_num,
+        remaining_questions_num,
       });
-      setRoom_id(res.data.room_id);
+      await setRoom_id(res.data.room_id);
       console.log("response(room_id):", res.data.room_id);
 
-      if (room_id !== 0) {
-        router.push(`/Waiting/${room_id}`);
-      }
+      router.push(`/Waiting/${room_id}`);
       return;
     } catch (e) {
       console.error("post出来ませんでした\n", e);
@@ -94,20 +81,20 @@ function Setting1Page() {
     }
   }
 
-  const handleClick = () => {
+  const handleClick = async () => {
     const session: session2 = {
       owner_id: id,
       participants_num: selectPnum,
       round_num: selectRnum,
-      questions_num: selectQnum,
+      remaining_questions_num: selectQnum,
     };
-    postRoomInfo(session);
+    await postRoomInfo(session);
     return;
   };
 
   return (
     <div>
-      <h2 style={{ fontSize: "50px" }}>Setting Page 2</h2>
+      <h2 style={{ fontSize: "50px" }}>Room Setting</h2>
       <div className="absolute left-28" style={{ backgroundColor: "Silver" }}>
         ~ゲーム設定~
       </div>
@@ -156,10 +143,14 @@ function Setting1Page() {
             value={selectQnum}
             onInput={handleInputQ}
           ></input>
-          
-          <Button onClick={handleClick} style={{fontSize:18 ,backgroundColor:'Gainsboro'}} className="hover: text-black">
-          <NavigateNextIcon />
-          決定
+
+          <Button
+            onClick={handleClick}
+            style={{ fontSize: 18, backgroundColor: "Gainsboro" }}
+            className="hover: text-black"
+          >
+            <NavigateNextIcon />
+            決定
           </Button>
         </form>
       </div>

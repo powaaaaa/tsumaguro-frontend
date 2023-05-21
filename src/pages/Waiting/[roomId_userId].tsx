@@ -13,6 +13,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { ConstructionRounded } from "@mui/icons-material";
 
 function createData(
   UserName: string,
@@ -29,7 +30,6 @@ const rows = [
   createData('d',122,'n'),
   createData('e',211,'n'),
 ];
-
 
 // ゲーミングステータスを取得
 function WaitingPage() {
@@ -54,7 +54,7 @@ function WaitingPage() {
 
   // 分岐
   const indexCustomNav = async (room_id: number) => {
-    // const status = await getGameStatus();
+    // const status = Number(await getGameStatus());
     const status: number = 1; // ここ
 
     switch (status) {
@@ -126,6 +126,10 @@ function WaitingPage() {
           `http://localhost:8000/waiting/${room_id}`
         );
         const resData = response.data as object[];
+
+        const userNames = resData.map((item: any) => item.user_name);
+        console.log("user_names", userNames);
+
         setResCount(resData.length);
         console.log("rescount", resCount);
       } catch (e) {
@@ -140,14 +144,13 @@ function WaitingPage() {
     };
   }, []);
 
-  // 人数が揃ったらゲーム開始
+  // 人数が揃ったらゲーム開始　かつユーザー情報(id, room_id)をpost
   const [partyNum, setPartyNum] = useState(0);
   useEffect(() => {
     const fetchPostWaiting = async () => {
       try {
-        const response = await axios.post(
-          `http://localhost:8000/room/${room_id}`
-        );
+        const url = `http://localhost:8000/waiting/${room_id}`;
+        const response = await axios.post(url, room_id);
         const resData = response.data;
         setPartyNum(resData.participants_num);
       } catch (e) {
@@ -159,9 +162,11 @@ function WaitingPage() {
     }
   }, [resCount]);
 
+  const URL = `./Room/${room_id}`;
+
   return (
     <div>
-      <h1 style={{ fontSize: "50px" }}>Waiting(動的生成)</h1>
+      <h1 style={{ fontSize: "50px" }}>Waiting</h1>
 
       <div
         className="h-72"
@@ -199,6 +204,9 @@ function WaitingPage() {
         </TableBody>
       </Table>
     </TableContainer>
+    <div className="flex flex-col">
+      <h1>待機中……</h1>
+      <div>{URL}を送って招待しよう！</div>
 
       </div>
     </div>

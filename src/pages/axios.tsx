@@ -17,9 +17,17 @@ export type session2 = {
   owner_id: number;
   participants_num: number;
   round_num: number;
-  questions_num: number;
+  remaining_questions_num: number;
   // Id: resType;
   // setId: React.Dispatch<React.SetStateAction<resType>>;
+};
+
+export type session3 = {
+  question: string;
+  room_id: number;
+  user_id: number;
+  question_round: number;
+  question_num: number;
 };
 
 // export type resType = {
@@ -69,7 +77,7 @@ export type session2 = {
 //     console.error("post出来ませんでした\n", e);
 //     return;
 //   }
-// }
+//
 
 export const getId = async () => {
   //   try {
@@ -89,3 +97,5 @@ export const getGameStatus = async (): Promise<number> => {
   const status: number = res.data;
   return status;
 };
+
+export default getGameStatus();

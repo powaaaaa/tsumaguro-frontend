@@ -1,12 +1,11 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Button from "@mui/material/Button";
-import CommentIcon from '@mui/icons-material/Comment';
+import CommentIcon from "@mui/icons-material/Comment";
 import { useRecoilState } from "recoil";
 import { idState } from "../../Setting1";
 import { room_idState } from "../../Setting2";
 import axios from "axios";
-const job = 1;
 
 function PositionPage() {
   const router = useRouter();
@@ -16,16 +15,35 @@ function PositionPage() {
   const [id, setId] = useRecoilState(idState);
   const [room_id, setRoom_id] = useRecoilState(room_idState);
   let startFlag = true; // ここ
-  let owner_id = 0;
+  let insider_id = 0;
+  let answer = "";
+  let genre = "";
 
   const getGameStatus = async () => {
-    const response = await axios.get(`http://localhost:8000/room/${room_id}`);
+    const response = await axios.get(
+      `http://localhost:8000/position/${room_id}`
+    );
     const resData = response.data;
     const status = resData.game_status;
-    console.log("status", status);
+    insider_id = resData.insider_id; // number
+    answer = resData.answer; // string
+    genre = resData.genre; // string
+    console.log("resData", resData);
     return;
   };
   getGameStatus();
+
+  // ユーザー情報(id, room_id)をpost
+  const postGameStatus = async () => {
+    const response = await axios.post(
+      `http://localhost:8000/position/${room_id}`,
+      room_id
+    );
+    return;
+  };
+
+  // インサイダー区別
+  const job = insider_id === id;
 
   // 分岐
   const indexCustomNav = async (room_id: number) => {
@@ -83,10 +101,8 @@ function PositionPage() {
   };
 
   const indexCustom = async () => {
-    var str = document.cookie;
     try {
       indexCustomNav(room_id);
-      // const Ids: IdType = await getId();
     } catch (e) {
       console.error("room_idの取得に失敗しました", e);
       return;
@@ -95,50 +111,97 @@ function PositionPage() {
 
   return (
     <div>
-      <h1 style={{ fontSize: "50px", }}>Position(動的生成)[roomId: {roomId}]</h1>
-      <div className="absolute left-28" style={{backgroundColor:'Silver'}}>
+      <h1 style={{ fontSize: "50px" }}>Position</h1>
+      <div className="absolute left-28" style={{ backgroundColor: "Silver" }}>
         ~役職公開~
       </div>
-      <div  className="h-28" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
-
-      <div style={{ fontSize: "20px",display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        あなたは
-      <div style={{color:'red'}} >
-          (ここに値を代入)
-        </div>
-        です。
-      </div>
-      <br/>
-      </div>
-
-      <div  className="h-28" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
-      {Number(job) === 1 ? (
-      <div style={{ fontSize: "30px" ,display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        今回のキーワードは
-        <div style={{color:'red'}} >
-        (ここに値を代入)
-        </div>
-        です。
-      </div>
-    ) : (
-      <div style={{ fontSize: "30px", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        今回のジャンルは
-        <div style={{color:'red'}} >
-          (ここに値を代入)
-        </div>
+      <div
+        className="h-28"
+        style={{
+          backgroundColor: "Silver",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "20px",
+        }}
+      >
+        <div
+          style={{
+            fontSize: "20px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          あなたは
+          {job ? (
+            <div style={{ color: "red" }}>インサイダー</div>
+          ) : (
+            <div style={{ color: "red" }}>市民</div>
+          )}
           です。
+        </div>
+        <br />
       </div>
-    )}
+
+      <div
+        className="h-28"
+        style={{
+          backgroundColor: "Silver",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "20px",
+        }}
+      >
+        {job ? (
+          <div
+            style={{
+              fontSize: "30px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            今回のキーワードは
+            <p style={{ color: "red" }}>{answer}</p>
+            です。
+          </div>
+        ) : (
+          <div
+            style={{
+              fontSize: "30px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            今回のジャンルは
+            <p style={{ color: "red" }}>{genre}</p>
+            です。
+          </div>
+        )}
       </div>
-      
 
-      <div className="h-16" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
-      <Button onClick={indexCustom} style={{fontSize:18 ,backgroundColor:'Gainsboro'}} className="hover: text-black">
-        <CommentIcon sx={{ fontSize: 40 }}/>
-        質問へ
-      </Button>
-      </div >
-
+      <div
+        className="h-16"
+        style={{
+          backgroundColor: "Silver",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "20px",
+        }}
+      >
+        <Button
+          onClick={indexCustom}
+          style={{ fontSize: 18, backgroundColor: "Gainsboro" }}
+          className="hover: text-black"
+        >
+          <CommentIcon sx={{ fontSize: 40 }} />
+          質問へ
+        </Button>
+      </div>
     </div>
   );
 }

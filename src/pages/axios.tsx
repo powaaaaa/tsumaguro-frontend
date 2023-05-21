@@ -1,82 +1,89 @@
 import axios from "axios";
-import setResId from "./recoil";
-import { idState } from "./status";
+import { idState } from "./Setting1";
 
-export type IdType = {
-  room_id: string;
-  user_id: string;
-};
+// export type IdType = {
+//   room_id: string;
+//   user_id: string;
+// };
 
 export type session1 = {
   user_name: string;
   session_id: string;
-  Id: resType;
-  setId: React.Dispatch<React.SetStateAction<resType>>;
+  // Id: resType;
+  // setId: React.Dispatch<React.SetStateAction<resType>>;
 };
 
 export type session2 = {
   owner_id: number;
   participants_num: number;
   round_num: number;
-  questions_num: number;
-  Id: resType;
-  setId: React.Dispatch<React.SetStateAction<resType>>;
+  remaining_questions_num: number;
+  // Id: resType;
+  // setId: React.Dispatch<React.SetStateAction<resType>>;
 };
 
-export type resType = {
-  id: number;
+export type session3 = {
+  question: string;
   room_id: number;
+  user_id: number;
+  question_round: number;
+  question_num: number;
 };
 
-export default async function postCookie({
-  user_name: user_name,
-  session_id: session_id,
-  Id: id,
-  setId: setId,
-}: session1) {
-  try {
-    const url = "http://localhost:8000/create_user";
-    const res = await axios.post<resType>(url, { user_name, session_id });
-    setId({ ...id, id: res.data.id });
-    console.log(res.data.id);
-    return [];
-  } catch (e) {
-    console.error("post出来ませんでした\n", e);
-    return [];
-  }
-}
+// export type resType = {
+//   id: number;
+//   room_id: number;
+// };
 
-export async function postRoomInfo({
-  owner_id: owner_id,
-  participants_num: participants_num,
-  round_num: round_num,
-  questions_num: questions_num,
-  Id: id,
-  setId: setId,
-}: session2) {
-  try {
-    const url = "http://localhost:8000/create_room";
-    const res = await axios.post<resType>(url, {
-      owner_id,
-      participants_num,
-      round_num,
-      questions_num,
-    });
-    setId({ ...id, room_id: res.data.room_id });
-    console.log(res.data.room_id);
+// export async function postCookie({
+//   user_name: user_name,
+//   session_id: session_id,
+//   Id: id,
+//   setId: setId,
+// }: session1) {
+//   try {
+//     const url = "http://localhost:8000/create_user";
+//     const res = await axios.post<resType>(url, { user_name, session_id });
+//     setId({ ...id, id: res.data.id });
+//     return;
+//   } catch (e) {
+//     console.error("post出来ませんでした\n", e);
+//     return;
+//   }
+// }
 
-    return [];
-  } catch (e) {
-    console.error("post出来ませんでした\n", e);
-    return [];
-  }
-}
+// export async function postRoomInfo({
+//   owner_id: owner_id,
+//   participants_num: participants_num,
+//   round_num: round_num,
+//   questions_num: questions_num,
+//   Id: id,
+//   setId: setId,
+// }: session2) {
+//   try {
+//     const url = "http://localhost:8000/create_room";
+//     const res = await axios.post<resType>(url, {
+//       owner_id,
+//       participants_num,
+//       round_num,
+//       questions_num,
+//     });
+//     setId({ ...id, room_id: res.data.room_id });
+//     console.log("res:", res.data.room_id);
+//     console.log("id: ", id.room_id);
 
-export const getId = async (): Promise<IdType> => {
+//     return;
+//   } catch (e) {
+//     console.error("post出来ませんでした\n", e);
+//     return;
+//   }
+// }
+
+export const getId = async () => {
   //   try {
   const url = "";
-  const res = await axios.get<IdType>(url);
-  const Ids: IdType = { room_id: res.data.room_id, user_id: res.data.user_id };
+  const res = await axios.get(url);
+  const Ids = { room_id: res.data.room_id, user_id: res.data.user_id };
   return Ids;
   //   } catch (e) {
   //     console.log(e);

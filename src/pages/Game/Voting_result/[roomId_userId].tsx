@@ -15,17 +15,19 @@ import Paper from '@mui/material/Paper';
 function createData(
   UserName: string,
   Id: number,
-  host: string
+  host: string,
+  vote: number,
+  job: string
 ) {
-  return { UserName,Id,host};
+  return { UserName,Id,host,vote,job};
 }
 
 const rows = [
-  createData('a',111,'y'),
-  createData('b',112,'n'),
-  createData('c',121,'n'),
-  createData('d',122,'n'),
-  createData('e',211,'n'),
+  createData('a',111,'y',1,'c'),
+  createData('b',112,'n',1,'c'),
+  createData('c',121,'n',2,'i'),
+  createData('d',122,'n',0,'c'),
+  createData('e',211,'n',1,'c'),
 ];
 
 
@@ -118,7 +120,35 @@ function RoomDetail() {
       </div>
 
       <div  className="h-72" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
-
+      <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell>UserName</TableCell>
+            <TableCell align="right">Id</TableCell>
+            <TableCell align="right">host</TableCell>
+            <TableCell align="right">vote</TableCell>
+            <TableCell align="right">job</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow
+              key={row.UserName}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {row.UserName}
+              </TableCell>
+              <TableCell align="right">{row.Id}</TableCell>
+              <TableCell align="right">{row.host}</TableCell>
+              <TableCell align="right">{row.vote}</TableCell>
+              <TableCell align="right">{row.job}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
       </div>
       <div className="absolute right-10 bottom-10">
       <Button onClick={indexCustom} style={{fontSize:18 ,backgroundColor:'Gainsboro'}} className="hover: text-black">

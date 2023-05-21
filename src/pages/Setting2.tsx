@@ -70,7 +70,7 @@ function Setting1Page() {
         round_num,
         remaining_questions_num,
       });
-      setRoom_id(res.data.room_id);
+      await setRoom_id(res.data.room_id);
       console.log("response(room_id):", res.data.room_id);
 
       router.push(`/Waiting/${room_id}`);

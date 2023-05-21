@@ -164,7 +164,7 @@ function PositionPage() {
             }}
           >
             今回のキーワードは
-            <div style={{ color: "red" }}>{answer}</div>
+            <p style={{ color: "red" }}>{answer}</p>
             です。
           </div>
         ) : (
@@ -177,7 +177,7 @@ function PositionPage() {
             }}
           >
             今回のジャンルは
-            <div style={{ color: "red" }}>{genre}</div>
+            <p style={{ color: "red" }}>{genre}</p>
             です。
           </div>
         )}

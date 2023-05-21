@@ -31,6 +31,7 @@ function QuestionPage() {
   let numBoolean = false;
   let gamestatus = 0;
   let question_round = 0;
+  let question_num = 0;
 
   // 分岐
   const indexCustomNav = async (room_id: number) => {
@@ -178,6 +179,7 @@ function QuestionPage() {
       const resData = response.data;
 
       question_round = resData.question_round;
+      question_num = resData.question_num;
 
       gamestatus = resData.game_status;
       insider_id = resData.insider_id; // number

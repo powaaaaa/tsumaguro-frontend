@@ -1,6 +1,5 @@
-import { idState } from "@/pages/Setting1";
-import { room_idState } from "@/pages/Setting2";
-import { session3 } from "@/pages/axios";
+import { idState } from "../../Setting1";
+import { room_idState } from "../../Setting2";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";

@@ -77,7 +77,7 @@ export type session3 = {
 //     console.error("post出来ませんでした\n", e);
 //     return;
 //   }
-// }
+//
 
 export const getId = async () => {
   //   try {
@@ -97,3 +97,5 @@ export const getGameStatus = async (): Promise<number> => {
   const status: number = res.data;
   return status;
 };
+
+export default getGameStatus();

@@ -17,19 +17,17 @@ import Paper from '@mui/material/Paper';
 function createData(
   UserName: string,
   Id: number,
-  host: string,
-  score: number,
-  job: string
+  host: string
 ) {
-  return { UserName,Id,host, score, job };
+  return { UserName,Id,host};
 }
 
 const rows = [
-  createData('a',111 ,'y',212,'c'),
-  createData('b',112,'n' ,221,'c'),
-  createData('c',121,'n' ,222,'i'),
-  createData('d',122,'n' ,222,'c'),
-  createData('e',211,'n' ,222,'c'),
+  createData('a',111,'y'),
+  createData('b',112,'n'),
+  createData('c',121,'n'),
+  createData('d',122,'n'),
+  createData('e',211,'n'),
 ];
 
 
@@ -183,8 +181,6 @@ function WaitingPage() {
             <TableCell>UserName</TableCell>
             <TableCell align="right">Id</TableCell>
             <TableCell align="right">host</TableCell>
-            <TableCell align="right">score</TableCell>
-            <TableCell align="right">job</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -198,8 +194,6 @@ function WaitingPage() {
               </TableCell>
               <TableCell align="right">{row.Id}</TableCell>
               <TableCell align="right">{row.host}</TableCell>
-              <TableCell align="right">{row.score}</TableCell>
-              <TableCell align="right">{row.job}</TableCell>
             </TableRow>
           ))}
         </TableBody>

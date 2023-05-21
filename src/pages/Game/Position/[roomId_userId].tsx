@@ -1,5 +1,3 @@
-// postが残ってる
-
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Button from "@mui/material/Button";
@@ -36,9 +34,16 @@ function PositionPage() {
   getGameStatus();
 
   // ユーザー情報(id, room_id)をpost
+  const postGameStatus = async () => {
+    const response = await axios.post(
+      `http://localhost:8000/position/${room_id}`,
+      room_id
+    );
+    return;
+  };
 
   // インサイダー区別
-  const job = Number(insider_id) === id;
+  const job = insider_id === id;
 
   // 分岐
   const indexCustomNav = async (room_id: number) => {
@@ -96,7 +101,6 @@ function PositionPage() {
   };
 
   const indexCustom = async () => {
-    var str = document.cookie;
     try {
       indexCustomNav(room_id);
     } catch (e) {
@@ -107,7 +111,7 @@ function PositionPage() {
 
   return (
     <div>
-      <h1 style={{ fontSize: "50px" }}>Position(動的生成)[roomId: {roomId}]</h1>
+      <h1 style={{ fontSize: "50px" }}>Position</h1>
       <div className="absolute left-28" style={{ backgroundColor: "Silver" }}>
         ~役職公開~
       </div>

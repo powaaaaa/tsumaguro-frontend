@@ -4,12 +4,12 @@ import { session3 } from "../../axios";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import ForwardIcon from '@mui/icons-material/Forward';
-import MessageIcon from '@mui/icons-material/Message';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import ForwardIcon from "@mui/icons-material/Forward";
+import MessageIcon from "@mui/icons-material/Message";
 import ReplyIcon from "@mui/icons-material/Reply";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
@@ -19,8 +19,6 @@ import { atom, useRecoilState } from "recoil";
 function QuestionPage() {
   const router = useRouter();
 
-function QuestionPage() {
-  const router = useRouter();
   // ゲーミングステータスを取得
   const [id, setId] = useRecoilState(idState);
   const [room_id, setRoom_id] = useRecoilState(room_idState);
@@ -28,15 +26,16 @@ function QuestionPage() {
   let answer = ""; //string
   let genre = ""; //string
   let qer_id = 0;
-  let question = "";
   let q_toAnswer = "";
   let participants_num = 0;
   let numBoolean = false;
-  
+  let gamestatus = 0;
+  let question_round = 0;
+
   // 分岐
   const indexCustomNav = async (room_id: number) => {
     // const status = await getGameStatus();
-    const status: number = 3; // ここ
+    const status: number = gamestatus; // ここ
 
     switch (status) {
       case 0:
@@ -87,7 +86,7 @@ function QuestionPage() {
         break;
     }
   };
-  
+
   // インサイダー区別
   const job = Number(insider_id) === id;
 
@@ -121,22 +120,20 @@ function QuestionPage() {
       return;
     }
   };
-  
-  numBoolean = participants_num === resCount;
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 1000,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+  // numBoolean = participants_num === resCount;
 
-function PlayingPage() {
+  const style = {
+    position: "absolute" as "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 1000,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
 
   const [kenri, setkenri] = useState(1);
 
@@ -151,12 +148,20 @@ function PlayingPage() {
     event.stopPropagation();
   };
 
-  const [question, setQuestion] = useState('');
-  
-   const handleBuutonClick = async () => {
+  const [question, setQuestion] = useState("");
+
+  const handleButtonClick = async () => {
     if (numBoolean) {
-      kenrihakudatu();// テキストボックスの文字をクリア
-      setQuestion('');
+      kenrihakudatu(); // テキストボックスの文字をクリア
+      setQuestion("");
+      const session: session3 = {
+        question: question,
+        room_id: room_id,
+        user_id: id,
+        question_round: 0,
+        question_num: 0,
+      };
+      questioningWaiting(session);
       indexCustomNav(room_id);
     } else {
       alert("全員の質問が終了していません。");
@@ -164,60 +169,57 @@ function PlayingPage() {
     }
   };
 
-  const getGameStatus = async () => {
-    const response = await axios.get(
-      `http://localhost:8000/position/${room_id}`
-    );
-    const resData = response.data;
-    const status = resData.game_status;
-    insider_id = resData.insider_id; // number
-    answer = resData.answer; // string
-    genre = resData.genre; // string
-    participants_num = resData.partisipants_num;
-    console.log("resData", resData);
-    return;
-  };
-  getGameStatus();
-
   // ユーザー情報(id, room_id)をpost
   useEffect(() => {
     const fetchGetWaiting = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/waiting/${room_id}`
-        );
-        const resData = response.data as object[];
+      const response = await axios.get(
+        `http://localhost:8000/position/${room_id}`
+      );
+      const resData = response.data;
 
-        const userNames = resData.map((item: any) => item.user_name);
-        console.log("user_names", userNames);
+      question_round = resData.question_round;
 
-        setResCount(resData.length);
-        console.log("rescount", resCount);
-      } catch (e) {
-        console.error("リクエスト中にエラーが発生しました。", e);
-      }
+      gamestatus = resData.game_status;
+      insider_id = resData.insider_id; // number
+      answer = resData.answer; // string
+      genre = resData.genre; // string
+      participants_num = resData.partisipants_num;
+      console.log("resData", resData);
     };
 
     const interval = setInterval(fetchGetWaiting, 1000);
+
+    const ransu = async () => {
+      const res = await axios.get(`http://localhost:8000`);
+      console.log("ransu", res.data);
+    };
+    ransu();
 
     return () => {
       clearInterval(interval);
     };
   }, []);
-  
-  numBoolean = participants_num === resCount;
 
   // 全員が質問し終わったらanswerへ
 
   return (
     <div>
-      <h1 style={{ fontSize: "50px", }}>Questioning(動的生成)[roomId: {roomId}]</h1>
-      
-      <div className="absolute left-28" style={{backgroundColor:'Silver'}}>
-      ~質問タイム~
+      <h1 style={{ fontSize: "50px" }}>Questioning!</h1>
+
+      <div className="absolute left-28" style={{ backgroundColor: "Silver" }}>
+        ~質問タイム~
       </div>
-      <div className="h-56" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }} >
-      <TextField
+      <div
+        className="h-56"
+        style={{
+          backgroundColor: "Silver",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "20px",
+        }}
+      >
+        <TextField
           id="outlined-multiline-static"
           label="質問"
           multiline
@@ -226,49 +228,67 @@ function PlayingPage() {
           value={question} // テキストボックスの値を設定
           onChange={(e) => setQuestion(e.target.value)}
         />
-        </div>
-        <div  className="h-16" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }} >
-        {Number(kenri)===1 ? (
-        <Button  className="hover: text-black" style={{fontSize:18 ,backgroundColor:'Gainsboro'}} onClick={handleButtonClick} >
-          <ForwardIcon sx={{ fontSize: 30 }} />
-          送信
-        </Button>):(
-          <Button  className="hover: text-black" style={{fontSize:18 ,backgroundColor:'Gray'}}>
-          <ForwardIcon sx={{ fontSize: 30 }} />
-          送信済み
-        </Button>
+      </div>
+      <div
+        className="h-16"
+        style={{
+          backgroundColor: "Silver",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "20px",
+        }}
+      >
+        {Number(kenri) === 1 ? (
+          <Button
+            className="hover: text-black"
+            style={{ fontSize: 18, backgroundColor: "Gainsboro" }}
+            onClick={handleButtonClick}
+          >
+            <ForwardIcon sx={{ fontSize: 30 }} />
+            送信
+          </Button>
+        ) : (
+          <Button
+            className="hover: text-black"
+            style={{ fontSize: 18, backgroundColor: "Gray" }}
+          >
+            <ForwardIcon sx={{ fontSize: 30 }} />
+            送信済み
+          </Button>
         )}
         <Button
-        variant="contained"
-        className="hover: text-black"
-        style={{ fontSize:18 ,backgroundColor: "Gainsboro" }}
-        onClick={handleOpen} >
+          variant="contained"
+          className="hover: text-black"
+          style={{ fontSize: 18, backgroundColor: "Gainsboro" }}
+          onClick={handleOpen}
+        >
           <MessageIcon sx={{ fontSize: 30 }} />
           返答
           <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style} onClick={handleModalClick}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                  質問の返答
-                </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                  ここにたくさん表示
-                </Typography>
-                <br/>
-                <Button
-                  onClick={handleClose}
-                  variant="contained"
-                  className="hover: text-black"
-                  style={{ backgroundColor: "Gainsboro" }}
-                >
-                  <ReplyIcon sx={{ fontSize: 30 }} />
-                  閉じる
-                </Button>
-              </Box>
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style} onClick={handleModalClick}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                質問の返答
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                ここにたくさん表示
+              </Typography>
+              <br />
+              <Button
+                onClick={handleClose}
+                variant="contained"
+                className="hover: text-black"
+                style={{ backgroundColor: "Gainsboro" }}
+              >
+                <ReplyIcon sx={{ fontSize: 30 }} />
+                閉じる
+              </Button>
+            </Box>
           </Modal>
         </Button>
       </div>

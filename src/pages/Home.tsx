@@ -39,7 +39,7 @@ function HomePage() {
 
   return (
     <div>
-      <h1 style={{ fontSize: "50px" }}>Home Page</h1>
+      <h1 style={{ fontSize: "50px" }}></h1>
 
       <div
         className="h-96"
@@ -50,7 +50,7 @@ function HomePage() {
           alignItems: "center",
         }}
       >
-        ここにタイトルを入力
+        インサイダーゲーム
       </div>
 
       <div

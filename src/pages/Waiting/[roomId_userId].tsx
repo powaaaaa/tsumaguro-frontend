@@ -138,10 +138,12 @@ function WaitingPage() {
     }
   }, [resCount]);
 
+  const URL = `./Room/${room_id}`;
+
   return (
-    <div>
-      <h1>参加者待機(動的生成)</h1>
-      <div>現在の参加者を表示</div>
+    <div className="flex flex-col">
+      <h1>待機中……</h1>
+      <div>{URL}を送って招待しよう！</div>
 
       <button type="button" onClick={indexCustom}>
         ゲームプレイへ

@@ -94,7 +94,7 @@ function Setting1Page() {
 
   return (
     <div>
-      <h2 style={{ fontSize: "50px" }}>Setting Page 2</h2>
+      <h2 style={{ fontSize: "50px" }}>Room Setting</h2>
       <div className="absolute left-28" style={{ backgroundColor: "Silver" }}>
         ~ゲーム設定~
       </div>

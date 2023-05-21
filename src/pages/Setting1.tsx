@@ -54,7 +54,7 @@ function Setting1Page() {
 
   return (
     <div>
-      <h2 style={{ fontSize: "50px" }}>Setting Page 1</h2>
+      <h2 style={{ fontSize: "50px" }}>User Setting</h2>
       <div className="absolute left-28" style={{ backgroundColor: "Silver" }}>
         ~ユーザー名を設定~
       </div>

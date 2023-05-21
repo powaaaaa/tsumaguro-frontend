@@ -136,6 +136,53 @@ function QuestionPage() {
     }
   };
 
+  // post
+  useEffect(() => {
+    const fetchGetWaiting = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/waiting/${room_id}`
+        );
+        const resData = response.data as object[];
+
+        const userNames = resData.map((item: any) => item.user_name);
+        console.log("user_names", userNames);
+
+        setResCount(resData.length);
+        console.log("rescount", resCount);
+      } catch (e) {
+        console.error("リクエスト中にエラーが発生しました。", e);
+      }
+    };
+
+    const interval = setInterval(fetchGetWaiting, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  // post
+  useEffect(() => {
+    const fetchGetWaiting = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/answering/${room_id}`
+        );
+        const resData = response.data as object[];
+        console.log("rescount", resCount);
+      } catch (e) {
+        console.error("リクエスト中にエラーが発生しました。", e);
+      }
+    };
+
+    const interval = setInterval(fetchGetWaiting, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   numBoolean = participants_num === resCount;
 
   // 全員が質問し終わったらanswerへ

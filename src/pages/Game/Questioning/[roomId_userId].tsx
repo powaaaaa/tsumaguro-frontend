@@ -53,7 +53,7 @@ function PlayingPage() {
   const [question, setQuestion] = useState('');
 
   const handleButtonClick = () => {
-    kenrihakudatu
+    kenrihakudatu();
     setQuestion(''); // テキストボックスの文字をクリア
   };
 

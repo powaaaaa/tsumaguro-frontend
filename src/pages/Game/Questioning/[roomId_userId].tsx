@@ -1,6 +1,11 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { IdType, postCookie } from "@/pages/axios";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import ForwardIcon from '@mui/icons-material/Forward';
 
 function PlayingPage() {
   const router = useRouter();
@@ -84,12 +89,28 @@ function PlayingPage() {
 
   return (
     <div>
-      <h1>質問(動的生成)[roomId: {roomId}]</h1>
+      <h1 style={{ fontSize: "50px", }}>Questioning(動的生成)[roomId: {roomId}]</h1>
+      
+      <div className="absolute left-28" style={{backgroundColor:'Silver'}}>
+      ~質問タイム~
+      </div>
+      <div  className="h-56" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }} >
+      <TextField className="absolute left-20 top-32"
+          id="outlined-multiline-static"
+          label="質問"
+          multiline
+          rows={6}
+          defaultValue="はいかいいえで答えられる質問"
+        />
+        </div>
+        <div  className="h-16" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }} >
+        <Button  className="absolute left-48 hover: text-black" style={{fontSize:18 ,backgroundColor:'Gainsboro'}}>
+          <ForwardIcon sx={{ fontSize: 30 }} />
+          送信
+        </Button>
+        </div>
 
-      <div>テキストボックスに質問を入力(全員の質問が揃うまで進行なし)</div>
-      <button type="button" onClick={indexCustom}>
-        答え合わせへ
-      </button>
+
     </div>
   );
 }

@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
+
 function PlayingPage() {
   const router = useRouter();
   const roomId = router.query.roomId_userId;
 
   const indexCustomNav = ({ room_id, user_id }: IdType) => {
-    const status: number = 1;
+    const status: number = 4;
 
     switch (status) {
       case 0:

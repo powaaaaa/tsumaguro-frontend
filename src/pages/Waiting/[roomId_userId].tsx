@@ -5,6 +5,7 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { idState } from "../Setting1";
 import { room_idState } from "../Setting2";
+import { ConstructionRounded } from "@mui/icons-material";
 
 // ゲーミングステータスを取得
 function WaitingPage() {
@@ -29,7 +30,7 @@ function WaitingPage() {
 
   // 分岐
   const indexCustomNav = async (room_id: number) => {
-    // const status = await getGameStatus();
+    // const status = Number(await getGameStatus());
     const status: number = 1; // ここ
 
     switch (status) {
@@ -101,6 +102,10 @@ function WaitingPage() {
           `http://localhost:8000/waiting/${room_id}`
         );
         const resData = response.data as object[];
+
+        const userNames = resData.map((item: any) => item.user_name);
+        console.log("user_names", userNames);
+
         setResCount(resData.length);
         console.log("rescount", resCount);
       } catch (e) {
@@ -115,14 +120,13 @@ function WaitingPage() {
     };
   }, []);
 
-  // 人数が揃ったらゲーム開始
+  // 人数が揃ったらゲーム開始　かつユーザー情報(id, room_id)をpost
   const [partyNum, setPartyNum] = useState(0);
   useEffect(() => {
     const fetchPostWaiting = async () => {
       try {
-        const response = await axios.post(
-          `http://localhost:8000/room/${room_id}`
-        );
+        const url = `http://localhost:8000/waiting/${room_id}`;
+        const response = await axios.post(url, room_id);
         const resData = response.data;
         setPartyNum(resData.participants_num);
       } catch (e) {

@@ -3,6 +3,32 @@ import Link from "next/link";
 import { IdType, postCookie } from "@/pages/axios";
 import Button from '@mui/material/Button';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
+import * as React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
+
+function createData(
+  UserName: string,
+  host: string,
+  score: number,
+  job: string
+) {
+  return { UserName,host, score, job };
+}
+
+const rows = [
+  createData('a','y',212,'c'),
+  createData('b','n' ,221,'c'),
+  createData('c','n' ,222,'i'),
+  createData('d','n' ,222,'c'),
+  createData('e','n' ,222,'c'),
+];
 
 function RoundResultPage() {
   const router = useRouter();
@@ -93,7 +119,33 @@ function RoundResultPage() {
       </div>
 
       <div  className="h-72" style={{backgroundColor:'Silver',display: 'flex', justifyContent: 'center', alignItems: 'center' , gap: '20px' }}>
-        
+      <TableContainer component={Paper} >
+      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell>UserName</TableCell>
+            <TableCell align="right">host</TableCell>
+            <TableCell align="right">score</TableCell>
+            <TableCell align="right">job</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow
+              key={row.UserName}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {row.UserName}
+              </TableCell>
+              <TableCell align="right">{row.host}</TableCell>
+              <TableCell align="right">{row.score}</TableCell>
+              <TableCell align="right">{row.job}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
       </div>
 
       <div className="absolute right-10 bottom-10">

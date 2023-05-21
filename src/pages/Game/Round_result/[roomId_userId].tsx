@@ -12,6 +12,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+const round = 3;
 
 function createData(
   UserName: string,
@@ -149,10 +150,16 @@ function RoundResultPage() {
       </div>
 
       <div className="absolute right-10 bottom-10">
+        {Number(round) === 0 ? (
       <Button type="button" onClick={indexCustom} style={{fontSize:18 ,backgroundColor:'Gainsboro'}} className="hover: text-black">
           <MilitaryTechIcon sx={{ fontSize: 40 }}/>
         最終結果へ
-      </Button>
+      </Button>) : (
+        <Button type="button" onClick={indexCustom} style={{fontSize:18 ,backgroundColor:'Gainsboro'}} className="hover: text-black">
+        <MilitaryTechIcon sx={{ fontSize: 40 }}/>
+        次のラウンドへ
+    </Button>
+      )}
       </div>
     </div>
   );

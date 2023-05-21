@@ -136,22 +136,6 @@ function QuestionPage() {
     }
   };
 
-  // 質問を送信するとボタンが質問文に変わる処理const
-  const GetAltData = () => {
-    const [altData, setAltData] = useState();
-    const url = `http://localhost:8000/answering/${room_id}`;
-    axios.get(url).then((res) => {
-      setAltData(res.data);
-    });
-  };
-  useEffect(() => {
-    const interval = setInterval(questioningWaiting, 1000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [resCount]);
-
   numBoolean = participants_num === resCount;
 
   // 全員が質問し終わったらanswerへ
@@ -161,12 +145,6 @@ function QuestionPage() {
       <h1>質問(動的生成)</h1>
 
       <div>テキストボックスに質問を入力(全員の質問が揃うまで進行なし)</div>
-
-      {question ? (
-        <div>{question}</div>
-      ) : (
-        <button onClick={GetAltData}>データを取得</button>
-      )}
 
       <button type="button" onClick={indexCustom}>
         答え合わせへ

@@ -11,6 +11,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
 const round = 3;
 
@@ -156,7 +157,7 @@ function RoundResultPage() {
         最終結果へ
       </Button>) : (
         <Button type="button" onClick={indexCustom} style={{fontSize:18 ,backgroundColor:'Gainsboro'}} className="hover: text-black">
-        <MilitaryTechIcon sx={{ fontSize: 40 }}/>
+        <AutoAwesomeIcon sx={{ fontSize: 40 }}/>
         次のラウンドへ
     </Button>
       )}
